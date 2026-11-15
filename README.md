@@ -1,6 +1,7 @@
 # Digital Store (Drip Store) – Projeto Front-end
 
 Aplicação em React com 3 páginas: Home, Listagem de Produtos e Visualização do Produto.
+Deploy (Vercel): [https://digital-store-gtech.vercel.app/] (https://digital-store-gtech.vercel.app/)
 
 ## Tecnologias
 React, Vite, React Router DOM, CSS puro.
