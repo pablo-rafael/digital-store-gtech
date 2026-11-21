@@ -1,4 +1,3 @@
-import Layout from './Layout'
 import HeroBanner from '../components/HeroBanner'
 import Section from '../components/Section'
 import CollectionCard from '../components/CollectionCard'
@@ -8,11 +7,12 @@ import SpecialOffer from '../components/SpecialOffer'
 import { collections, homeSlides, products } from '../data/products'
 import { collectionTexts, heroTexts, specialOffer } from '../data/content'
 
+// junta as imagens do banner (products.js) com os textos (content.js)
 const slides = homeSlides.map((slide, i) => ({ ...heroTexts[i % heroTexts.length], image: slide.src }))
 
 export default function HomePage() {
   return (
-    <Layout flush>
+    <>
       <HeroBanner slides={slides} />
 
       <div className="container">
@@ -32,6 +32,6 @@ export default function HomePage() {
       </div>
 
       <SpecialOffer {...specialOffer} />
-    </Layout>
+    </>
   )
 }

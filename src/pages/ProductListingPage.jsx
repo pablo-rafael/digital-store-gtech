@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import Layout from './Layout'
 import Section from '../components/Section'
 import ProductListing from '../components/ProductListing'
 import FilterGroup from '../components/FilterGroup'
@@ -24,12 +23,12 @@ export default function ProductListingPage() {
     state: [],
   })
 
-  // atalhos da Home / rodapé
+  // quando a categoria vem pela URL (atalhos da Home / rodapé), marca o filtro
   useEffect(() => {
     setFilters((f) => ({ ...f, category: categoryParam ? [categoryParam] : [] }))
   }, [categoryParam])
 
-  // filtros aberto (mobile)
+  // trava a rolagem enquanto o painel de filtros (mobile) está aberto
   useEffect(() => {
     document.body.style.overflow = filtersOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
@@ -59,41 +58,39 @@ export default function ProductListingPage() {
   const title = term ? `Resultados para “${term}” - ${count}` : `${count} encontrados`
 
   return (
-    <Layout>
-      <div className="container listing-page">
-        {/* Filtros*/}
-        <aside className={`filters ${filtersOpen ? 'filters--open' : ''}`}>
-          <div className="filters__head">
-            <h3>Filtrar por</h3>
-            <button type="button" className="icon-btn filters__close" onClick={() => setFiltersOpen(false)} aria-label="Fechar filtros">
-              <CloseIcon />
-            </button>
-          </div>
-          <hr />
-          <FilterGroup title="Marca" inputType="checkbox" options={unique('brand')} selected={filters.brand} onChange={toggle('brand')} />
-          <FilterGroup title="Categoria" inputType="checkbox" options={unique('category')} selected={filters.category} onChange={toggle('category')} />
-          <FilterGroup title="Gênero" inputType="checkbox" options={unique('gender')} selected={filters.gender} onChange={toggle('gender')} />
-          <FilterGroup title="Estado" inputType="radio" options={unique('state')} selected={filters.state} onChange={choose('state')} />
-        </aside>
-        {filtersOpen && <div className="overlay overlay--visible" onClick={() => setFiltersOpen(false)} />}
-
-        <div className="listing-page__main">
-          <div className="toolbar">
-            <select className="sort-select" value={sort} onChange={(e) => setSort(e.target.value)} aria-label="Ordenar por">
-              <option value="relevant">Ordenar por: mais relevantes</option>
-              <option value="menor">Ordenar por: menor preço</option>
-              <option value="maior">Ordenar por: maior preço</option>
-            </select>
-            <button type="button" className="filter-btn" onClick={() => setFiltersOpen(true)} aria-label="Abrir filtros">
-              <FilterIcon />
-            </button>
-          </div>
-
-          <Section title={title} titleAlign="left">
-            {result.length ? <ProductListing products={result} /> : <p className="empty">Nenhum produto encontrado.</p>}
-          </Section>
+    <div className="container listing-page">
+      {/* Filtros: coluna lateral no desktop, painel que surge da esquerda no mobile */}
+      <aside className={`filters ${filtersOpen ? 'filters--open' : ''}`}>
+        <div className="filters__head">
+          <h3>Filtrar por</h3>
+          <button type="button" className="icon-btn filters__close" onClick={() => setFiltersOpen(false)} aria-label="Fechar filtros">
+            <CloseIcon />
+          </button>
         </div>
+        <hr />
+        <FilterGroup title="Marca" inputType="checkbox" options={unique('brand')} selected={filters.brand} onChange={toggle('brand')} />
+        <FilterGroup title="Categoria" inputType="checkbox" options={unique('category')} selected={filters.category} onChange={toggle('category')} />
+        <FilterGroup title="Gênero" inputType="checkbox" options={unique('gender')} selected={filters.gender} onChange={toggle('gender')} />
+        <FilterGroup title="Estado" inputType="radio" options={unique('state')} selected={filters.state} onChange={choose('state')} />
+      </aside>
+      {filtersOpen && <div className="overlay overlay--visible" onClick={() => setFiltersOpen(false)} />}
+
+      <div className="listing-page__main">
+        <div className="toolbar">
+          <select className="sort-select" value={sort} onChange={(e) => setSort(e.target.value)} aria-label="Ordenar por">
+            <option value="relevant">Ordenar por: mais relevantes</option>
+            <option value="menor">Ordenar por: menor preço</option>
+            <option value="maior">Ordenar por: maior preço</option>
+          </select>
+          <button type="button" className="filter-btn" onClick={() => setFiltersOpen(true)} aria-label="Abrir filtros">
+            <FilterIcon />
+          </button>
+        </div>
+
+        <Section title={title} titleAlign="left">
+          {result.length ? <ProductListing products={result} /> : <p className="empty">Nenhum produto encontrado.</p>}
+        </Section>
       </div>
-    </Layout>
+    </div>
   )
 }

@@ -28,8 +28,8 @@ const columns = [
     title: 'Contato',
     className: 'info-list--contact',
     informations: [
-      { text: 'Av. Santos Dumont, 1510 - 1 andar - Aldeota, Fortaleza - CE, 60150-161', link: '#' },
-      { text: '(85) 3051-3411', link: '#' },
+      { text: 'Av. Santos Dumont, 1510 - 1 andar - Aldeota, Fortaleza - CE, 60150-161', link: '/contact' },
+      { text: '(85) 3051-3411', link: '/contact' },
     ],
   },
 ]
